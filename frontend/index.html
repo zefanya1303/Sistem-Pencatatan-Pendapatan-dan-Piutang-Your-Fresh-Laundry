@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f3f8fd">
+  <title>Your Fresh Laundry | Catatan Usaha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../backend/app.js"></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="Your Fresh Laundry beranda">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" role="img">
+            <rect x="7" y="5" width="34" height="38" rx="9" fill="#fff" opacity=".98"/>
+            <path d="M7 15h34" stroke="#d9efff" stroke-width="2"/>
+            <circle cx="24" cy="29" r="10" fill="#dff5ff" stroke="#54a9e8" stroke-width="2"/>
+            <circle cx="24" cy="29" r="6.5" fill="#84d2ee"/>
+            <path d="M19 30c2.2 2.5 6.5 2.1 8.2-.5M21 26c.8-1.1 2.1-1.3 3.1-.6" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="1.7"/>
+            <circle cx="14" cy="10" r="1.2" fill="#4c9bdd"/><circle cx="19" cy="10" r="1.2" fill="#4c9bdd"/>
+            <circle cx="35" cy="21" r="2" fill="#b9f0ff"/><circle cx="12" cy="28" r="1.5" fill="#b9f0ff"/>
+            <path d="M32 33h7v2.5h-7zM33 36h6v2h-6z" fill="#f8d972"/>
+          </svg>
+        </span>
+        <span class="brand-copy"><strong>Your Fresh Laundry</strong></span>
+      </a>
+
+      <div class="nav-label">MENU UTAMA</div>
+      <nav class="main-nav" aria-label="Menu utama">
+        <button class="nav-link active" data-page="dashboard" data-page-label="Dashboard"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="5" rx="1.5"/><rect x="13.5" y="11.5" width="7" height="9" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/></svg></span>Dashboard</button>
+        <button class="nav-link" data-page="customers" data-page-label="Pelanggan"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 20v-1.5a6 6 0 0 1 12 0V20M16 5.2a3.5 3.5 0 0 1 0 6.6M18 14.5a5 5 0 0 1 3 4.5V20"/></svg></span>Pelanggan</button>
+        <button class="nav-link" data-page="transactions" data-page-label="Transaksi"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3.5h9l4 4V20a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 20V5a1.5 1.5 0 0 1 1-1.5z"/><path d="M14.5 3.8V8h4.2M8.5 12h7M8.5 16h7"/></svg></span>Transaksi</button>
+        <button class="nav-link" data-page="payments" data-page-label="Pembayaran"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="14" rx="2.5"/><path d="M3 10h18M7 15h4"/></svg></span>Pembayaran</button>
+        <button class="nav-link" data-page="reports" data-page-label="Laporan Pendapatan"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20.5h16M6.5 17V11M12 17V5M17.5 17v-8"/><path d="m5.5 8 5-3 5 2 4-4"/></svg></span>Laporan Pendapatan</button>
+      </nav>
+
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="mobile-brand"><span class="brand-mark small" aria-hidden="true">
+          <svg viewBox="0 0 48 48"><rect x="7" y="5" width="34" height="38" rx="9" fill="#fff"/><path d="M7 15h34" stroke="#d9efff" stroke-width="2"/><circle cx="24" cy="29" r="10" fill="#dff5ff" stroke="#54a9e8" stroke-width="2"/><circle cx="24" cy="29" r="6.5" fill="#84d2ee"/><path d="M19 30c2.2 2.5 6.5 2.1 8.2-.5" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="1.7"/><circle cx="35" cy="21" r="2" fill="#b9f0ff"/></svg>
+        </span><strong>Your Fresh Laundry</strong></div>
+        <div class="breadcrumb"><span>Workspace</span><span class="crumb-slash">/</span><strong id="current-page-label">Dashboard</strong></div>
+        <div class="topbar-right">
+          <div class="live-time"><span class="time-dot"></span><span id="date-label">Memuat tanggal...</span><span id="time-label">--:-- WIB</span></div>
+          <button class="icon-button notification-button" aria-label="Notifikasi">♧<i></i></button>
+        </div>
+      </header>
+
+      <div id="connection-notice" class="notice hidden" role="status"></div>
+      <div id="app-message" class="toast hidden" role="status"></div>
+
+      <section class="page active" id="page-dashboard">
+        <div class="welcome-row">
+          <div class="welcome-copy">
+            <div class="eyebrow"><span class="sparkle">✦</span> YOUR FRESH LAUNDRY</div>
+            <h1 id="greeting-title">Selamat Pagi! <span class="wave">👋</span></h1>
+            <p class="muted" id="greeting-message">Siap bekerja dan mencatat transaksi hari ini?</p>
+            <button class="button button-primary" data-go="transactions"><span>＋</span> Catat Transaksi</button>
+          </div>
+          <div class="welcome-illustration">
+            <img src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&amp;fit=crop&amp;w=1200&amp;q=85"
+              alt="Seseorang sedang mengelola cucian dalam suasana laundry" fetchpriority="high">
+            <span class="laundry-bubble bubble-one"></span>
+            <span class="laundry-bubble bubble-two"></span>
+          </div>
+          <span class="hero-sparkle hero-sparkle-one" aria-hidden="true">✦</span>
+          <span class="hero-sparkle hero-sparkle-two" aria-hidden="true">✦</span>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card revenue-card">
+            <div class="stat-top"><span>Pendapatan Hari Ini</span><span class="stat-icon blue">↗</span></div>
+            <strong class="stat-value" id="today-revenue">Rp0</strong>
+            <div class="stat-foot"><span class="tiny-check">✓</span> Total nilai cucian hari ini</div>
+            <span class="stat-decoration">✦</span>
+          </article>
+          <article class="stat-card receivable-card">
+            <div class="stat-top"><span>Piutang Pelanggan</span><span class="stat-icon yellow">◷</span></div>
+            <strong class="stat-value" id="total-receivable">Rp0</strong>
+            <div class="stat-foot"><span class="foot-dot yellow-dot"></span> Sisa pembayaran yang belum lunas</div>
+          </article>
+          <article class="stat-card cash-card">
+            <div class="stat-top"><span>Kas Masuk Hari Ini</span><span class="stat-icon green">↓</span></div>
+            <strong class="stat-value" id="today-cash">Rp0</strong>
+            <div class="stat-foot"><span class="foot-dot green-dot"></span> Pembayaran diterima hari ini</div>
+          </article>
+          <article class="stat-card count-card">
+            <div class="stat-top"><span>Jumlah Transaksi</span><span class="stat-icon violet">▤</span></div>
+            <strong class="stat-value" id="today-count">0 <small>transaksi</small></strong>
+            <div class="stat-foot"><span class="foot-dot violet-dot"></span> Cucian masuk hari ini</div>
+          </article>
+        </div>
+
+        <div class="content-grid">
+          <section class="panel recent-panel">
+            <div class="panel-heading">
+              <div><h2>Transaksi Terbaru</h2><p class="muted">Pantau cucian yang baru dicatat</p></div>
+              <button class="text-button" data-go="transactions">Lihat semua <span>→</span></button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Pelanggan</th><th>Layanan</th><th>Waktu</th><th>Total</th><th>Status</th></tr></thead>
+                <tbody id="recent-transactions"></tbody>
+              </table>
+              <div class="empty-state hidden" id="recent-empty"><span>🫧</span><strong>Belum ada transaksi</strong><small>Transaksi baru akan muncul di sini.</small></div>
+            </div>
+          </section>
+          <aside class="panel quick-panel">
+            <div class="panel-heading"><div><h2>Akses Cepat</h2><p class="muted">Apa yang ingin Anda lakukan?</p></div></div>
+            <button class="quick-action" data-go="customers"><span class="quick-icon customer-icon">♙</span><span><strong>Tambah Pelanggan</strong><small>Simpan data pelanggan baru</small></span><b>→</b></button>
+            <button class="quick-action" data-go="transactions"><span class="quick-icon laundry-icon">✧</span><span><strong>Catat Cucian Masuk</strong><small>Buat transaksi laundry baru</small></span><b>→</b></button>
+            <button class="quick-action" data-go="payments"><span class="quick-icon payment-icon">↗</span><span><strong>Terima Pembayaran</strong><small>Catat pembayaran pelanggan</small></span><b>→</b></button>
+            <div class="quick-tip"><span>💡</span><p><strong>Tips hari ini</strong><br>Catat pembayaran sebagian agar sisa tagihan pelanggan tetap terpantau.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="page" id="page-customers">
+        <div class="page-heading"><div><div class="eyebrow">KENALI PELANGGAN ANDA</div><h1>Data Pelanggan</h1><p class="muted">Simpan informasi pelanggan agar mudah membuat transaksi.</p></div></div>
+        <div class="two-column">
+          <form class="panel form-panel" id="customer-form">
+            <div class="panel-heading"><div><h2 id="customer-form-title">Tambah Pelanggan</h2><p class="muted">Isi informasi pelanggan di bawah ini.</p></div><span class="heading-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20v-1.5a7 7 0 0 1 14 0V20"/></svg></span></div>
+            <label>Nama Pelanggan<input name="nama_customer" type="text" placeholder="Contoh: Siti Aminah" maxlength="120" required></label>
+            <label>Nomor Telepon<input name="nomor_telepon" type="tel" placeholder="Contoh: 081234567890" maxlength="30" required></label>
+            <label>Alamat <span class="optional">(opsional)</span><textarea name="alamat" rows="3" placeholder="Alamat pelanggan"></textarea></label>
+            <button class="button button-primary full-button" id="save-customer-button" type="submit">＋ Simpan Pelanggan</button>
+            <button class="button button-secondary full-button hidden" id="cancel-customer-edit" type="button">Batal Edit</button>
+          </form>
+          <section class="panel list-panel">
+            <div class="panel-heading"><div><h2>Daftar Pelanggan</h2><p class="muted"><span id="customer-count">0</span> pelanggan terdaftar</p></div></div>
+            <div class="customer-list" id="customer-list"></div>
+            <div class="empty-state hidden" id="customer-empty"><span>👋</span><strong>Belum ada pelanggan</strong><small>Tambahkan pelanggan pertama Anda.</small></div>
+          </section>
+        </div>
+        <div class="confirm-backdrop hidden" id="customer-delete-confirm" role="dialog" aria-modal="true" aria-labelledby="delete-confirm-title">
+          <div class="confirm-dialog">
+            <span class="confirm-icon">!</span>
+            <h2 id="delete-confirm-title">Hapus Data Pelanggan?</h2>
+            <p id="delete-confirm-message">Apakah Anda yakin ingin menghapus data pelanggan ini?</p>
+            <div class="confirm-actions">
+              <button class="button button-secondary" id="cancel-customer-delete" type="button">Batal</button>
+              <button class="button button-danger" id="confirm-customer-delete" type="button">Ya, hapus</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="page-transactions">
+        <div class="page-heading"><div><div class="eyebrow">CUCIAN MASUK, LANGSUNG TERCATAT</div><h1>Transaksi Laundry</h1><p class="muted">Harga dihitung otomatis berdasarkan jenis cucian.</p></div></div>
+        <div class="two-column transaction-layout">
+          <form class="panel form-panel" id="transaction-form">
+            <div class="panel-heading"><div><h2>Catat Cucian Baru</h2><p class="muted">Lengkapi detail cucian pelanggan.</p></div><span class="heading-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3.5h9l4 4V20a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 20V5a1.5 1.5 0 0 1 1-1.5z"/><path d="M14.5 3.8V8h4.2M8.5 13h7M8.5 16.5h5"/></svg></span></div>
+            <label>Pilih Pelanggan<select name="id_customer" id="transaction-customer" required><option value="">Pilih pelanggan</option></select></label>
+            <label>Jenis Cucian<select name="id_jenis_cucian" id="laundry-kind" required><option value="">Memuat jenis cucian...</option></select></label>
+            <div class="form-row">
+              <label id="weight-field">Berat Cucian (kg)<input name="berat_kg" id="laundry-weight" type="number" min="0.1" step="0.1" placeholder="Contoh: 5" required></label>
+              <label id="quantity-field" class="hidden">Jumlah Satuan<input name="jumlah" id="laundry-quantity" type="number" min="1" step="1" placeholder="Contoh: 2"></label>
+            </div>
+            <label id="vanish-field">Pilihan Vanish<select name="menggunakan_vanish" id="vanish-option"><option value="false">Tanpa Vanish</option><option value="true">Tambah Vanish (+Rp3.000/kg)</option></select></label>
+            <label>Jenis Parfum Laundry<select name="jenis_pewangi"><option>Lavender</option><option>Sakura</option><option>Ocean Fresh</option><option>Rose / Mawar</option><option>Baby Soft</option><option>Green Tea</option></select></label>
+            <label>Keterangan Laundry <span class="optional">(opsional)</span><textarea name="keterangan" rows="2" placeholder="Contoh: Pisahkan pakaian putih"></textarea></label>
+            <div class="estimate-box"><span><small>Perkiraan selesai</small><strong id="completion-estimate">2 hari</strong></span><span class="estimate-divider"></span><span><small>Deterjen standar</small><strong>Deterjen Cair Laundry</strong></span></div>
+            <div class="total-box"><span><small>Perkiraan total</small><strong id="price-breakdown">Masukkan berat cucian</strong></span><strong class="total-amount" id="transaction-total">Rp0</strong></div>
+            <button class="button button-primary full-button" type="submit">Simpan Transaksi <span>→</span></button>
+          </form>
+          <section class="panel list-panel transaction-history">
+            <div class="panel-heading"><div><h2>Riwayat Transaksi</h2><p class="muted">Semua cucian yang sudah dicatat</p></div><span class="heading-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3.5h9l4 4V20a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 20V5a1.5 1.5 0 0 1 1-1.5z"/><path d="M14.5 3.8V8h4.2M8.5 12h7M8.5 16h7"/></svg></span></div>
+            <div class="table-wrap">
+              <div class="table-filters">
+                <label>Status Pembayaran<select id="filter-payment-status"><option value="all">Semua</option><option value="Lunas">Lunas</option><option value="Belum Lunas">Belum Lunas</option></select></label>
+                <label>Status Cucian<select id="filter-laundry-status"><option value="all">Semua</option><option value="Belum Selesai">Belum Selesai</option><option value="Selesai - Belum Diambil">Selesai - Belum Diambil</option><option value="Sudah Diambil">Sudah Diambil</option></select></label>
+              </div>
+              <table><thead><tr><th>Nama Pelanggan</th><th>Jenis Cucian</th><th>Waktu Transaksi</th><th>Berat / Jumlah Satuan</th><th>Total Tagihan</th><th>Jumlah Dibayar</th><th>Sisa Piutang</th><th>Status Pembayaran</th><th>Status Cucian</th><th>Tanggal Selesai</th><th>Aksi</th></tr></thead><tbody id="transactions-list"></tbody></table>
+              <div class="empty-state hidden" id="transactions-empty"><span>🧺</span><strong>Belum ada transaksi</strong><small>Cucian yang dicatat akan tampil di sini.</small></div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="page" id="page-payments">
+        <div class="page-heading"><div><div class="eyebrow">PEMBAYARAN TERCATAT RAPI</div><h1>Pembayaran</h1><p class="muted">Catat pembayaran dan pantau sisa tagihan pelanggan.</p></div></div>
+        <div class="two-column">
+          <form class="panel form-panel" id="payment-form">
+            <div class="panel-heading"><div><h2>Catat Pembayaran</h2><p class="muted">Pilih transaksi dan masukkan jumlah yang diterima.</p></div><span class="heading-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="14" rx="2.5"/><path d="M3 10h18M7 15h4"/></svg></span></div>
+            <label>Pilih Transaksi<select name="id_transaksi" id="payment-transaction" required><option value="">Pilih transaksi belum lunas</option></select></label>
+            <div class="payment-summary hidden" id="payment-summary">
+              <span><small>Total Tagihan</small><strong id="payment-total">Rp0</strong></span>
+              <span><small>Sudah Dibayar</small><strong id="payment-paid">Rp0</strong></span>
+              <span><small>Sisa Tagihan Saat Ini</small><strong id="payment-due">Rp0</strong></span>
+            </div>
+            <label>Uang Diterima (Rp)<input name="jumlah_pembayaran" id="payment-amount" type="number" min="1" step="1" placeholder="Contoh: 50000" required></label>
+            <label>Metode Pembayaran<select name="metode_pembayaran"><option>Tunai</option><option>Transfer</option><option>QRIS</option></select></label>
+            <div class="payment-result hidden" id="payment-result" aria-live="polite">
+              <div><span>Total Tagihan</span><strong id="preview-total">Rp0</strong></div>
+              <div><span>Uang Diterima</span><strong id="preview-received">Rp0</strong></div>
+              <div><span>Kas Masuk</span><strong id="preview-cash">Rp0</strong></div>
+              <div id="preview-change-row"><span>Kembalian</span><strong id="preview-change">Rp0</strong></div>
+              <div><span>Sisa Piutang</span><strong id="preview-due">Rp0</strong></div>
+              <div><span>Status Pembayaran</span><strong id="preview-status">Belum Lunas</strong></div>
+            </div>
+            <p class="payment-validation hidden" id="payment-validation">Untuk Transfer dan QRIS, jumlah pembayaran tidak boleh melebihi sisa tagihan.</p>
+            <button class="button button-primary full-button" id="save-payment-button" type="submit">Simpan Pembayaran <span>→</span></button>
+          </form>
+          <section class="panel list-panel">
+            <div class="panel-heading"><div><h2>Tagihan Pelanggan</h2><p class="muted">Transaksi yang masih memiliki sisa pembayaran</p></div></div>
+            <div class="due-list" id="due-list"></div>
+            <div class="empty-state hidden" id="due-empty"><span>🎉</span><strong>Semua tagihan lunas</strong><small>Tidak ada piutang pelanggan saat ini.</small></div>
+          </section>
+        </div>
+        <section class="panel payment-history-panel">
+          <div class="panel-heading"><div><h2>Riwayat Pembayaran</h2><p class="muted">Pembayaran yang sudah diterima</p></div></div>
+          <div class="table-wrap"><table><thead><tr><th>Pelanggan</th><th>Tanggal</th><th>Metode</th><th>Kas Masuk</th></tr></thead><tbody id="payments-list"></tbody></table></div>
+        </section>
+      </section>
+
+      <section class="page" id="page-reports">
+        <div class="page-heading"><div><div class="eyebrow">USAHA LEBIH MUDAH DIPANTAU</div><h1>Laporan Pendapatan</h1><p class="muted">Ringkasan sederhana dari transaksi dan pembayaran laundry Anda.</p></div></div>
+        <div class="stats-grid report-stats">
+          <article class="stat-card revenue-card"><div class="stat-top"><span>Total Pendapatan</span><span class="stat-icon blue">↗</span></div><strong class="stat-value" id="report-revenue">Rp0</strong><div class="stat-foot">Nilai semua transaksi</div></article>
+          <article class="stat-card cash-card"><div class="stat-top"><span>Total Kas Diterima</span><span class="stat-icon green">↓</span></div><strong class="stat-value" id="report-cash">Rp0</strong><div class="stat-foot">Semua pembayaran tercatat</div></article>
+          <article class="stat-card receivable-card"><div class="stat-top"><span>Sisa Piutang</span><span class="stat-icon yellow">◷</span></div><strong class="stat-value" id="report-receivable">Rp0</strong><div class="stat-foot">Tagihan yang belum dibayar</div></article>
+        </div>
+        <section class="panel report-panel"><div class="panel-heading"><div><h2>Rincian Transaksi</h2><p class="muted">Pendapatan, pembayaran, dan sisa setiap cucian</p></div></div><div class="table-wrap"><table><thead><tr><th>Pelanggan / Waktu</th><th>Layanan</th><th>Total Pendapatan</th><th>Sudah Dibayar</th><th>Sisa</th><th>Status</th></tr></thead><tbody id="report-list"></tbody></table><div class="empty-state hidden" id="report-empty"><span>📊</span><strong>Belum ada laporan</strong><small>Catat transaksi untuk mulai melihat laporan.</small></div></div></section>
+      </section>
+
+      <footer class="footer"><span>© 2026 Your Fresh Laundry</span><span>Dibuat untuk usaha laundry yang lebih rapi <b>✦</b></span></footer>
+    </main>
+  </div>
+</body>
+</html>
